@@ -1,9 +1,153 @@
-<h2>Carousel</h2>
+{{ 'glider.min.css' | asset_url | stylesheet_tag }}
+
+<style>
+
+    .glider__container {
+        position: relative;
+    }
+
+    .glider__container .prev,
+    .glider__container .next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%)
+        
+        border: 1px solid #333;
+        border-opacity: 0.8;
+        color: #00ffff;
+        background: #333;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: 0.3s;
+        height: 30px;
+        width: 30px;
+        display: none;
+    }
+
+    .glider__container .prev:hover,
+    .glider__container .next:hover {
+        background-color: white;
+        color: #333;
+    }
+
+    .glider__container .prev {
+        transform: translateY(-50%) rotate(180deg);
+        left: 0;
+    }
+
+    .glider__container .next {
+        right: 0;
+    }
+
+    .glider-track {
+        gap: 0.5em;
+    }
+
+    .glider .card {
+        overflow: hidden;
+    }
+
+    .card__image {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1;
+        object-fit: contain;
+    }
+
+    .card__title {
+        text-align: center;
+        font-size: 1.2em;
+        color: #333;
+    }
+
+    @media (min-width: 850px) {
+        .glider__container .prev,
+        .glider__container .next {
+            display: block;
+        }
+    }
+
+</style>
+
+
+<div class="page-width glider__container" id="{{ section.id }}">
+   
+    <div class="glider">
+        {%- for block in section.blocks -%}
+            {%- if block.type == "product" -%}
+                <a href="{{ block.settings.product.url }}" class="card">
+                    {{ block.settings.product.featured_image | image_url: width: 1000 | image_tag: class: "card__image"}}
+                    <p class="card__title">{{ block.settings.title | default: block.settings.product.title }}</p>
+                </a>
+            {%- endif -%}
+             {%- endfor -%}
+    </div>
+    <button class="prev" aria-label="Previous slide">{{ "icon-arrow.svg" | inline_asset_content }}</button>
+    <button class="next" aria-label="Next slide">{{ "icon-arrow.svg" | inline_asset_content }}</button>
+</div>
+
+
+<script src="{{ 'glider.min.js' | asset_url }}" onload="document.dispatchEvent(new Event('glider:loaded'))" async></script>
+<script>
+    function initCarousel() {
+        new Glider(document.querySelector('.glider'), {
+            slidesToShow: 1,
+            arrows: {
+                prev: '#{{ section.id }} .prev',
+                next: '#{{ section.id }} .next'
+              },
+            responsive: [
+                {
+                    breakpoint: 820,
+                    settings: {
+                      slidesToShow: {{ section.settings.number_slider_desktop }},
+                    }
+                },
+            ]
+        });
+    };
+
+    if(window.Glider) {
+        initCarousel()
+    } else {
+        document.addEventListener('glider:loaded', () => {
+            initCarousel();
+             
+         });
+    }
+   
+</script>
 
 {% schema %}
 {
     "name": "Carousel",
-    "settings": [],
+    "settings": [
+        {
+            "type": "number",
+            "id": "number_slider_desktop",
+            "label": "Number of Slides (Desktop)",
+            "default": 1,
+        }
+    ],
+    "blocks": [
+        {
+            "type": "product",
+            "name": "Product",
+            "settings": [
+                    {
+                        "type": "product",
+                        "label": "Product",
+                        "id": "product"
+                    },
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "Title",
+                        "info": "Optional. Will use the product title if left blank."
+                    }
+                ]
+        }
+    ],
     "presets": [
         { 
             "name": "Carousel" 

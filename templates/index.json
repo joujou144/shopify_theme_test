@@ -31,7 +31,10 @@
           }
         }
       },
-      "block_order": ["heading", "button"],
+      "block_order": [
+        "heading",
+        "button"
+      ],
       "settings": {
         "image_overlay_opacity": 40,
         "image_height": "large",
@@ -43,6 +46,56 @@
         "mobile_content_alignment": "center",
         "stack_images_on_mobile": false,
         "show_text_below": false
+      }
+    },
+    "carousel_jGLYrL": {
+      "type": "carousel",
+      "blocks": {
+        "product_fBFry7": {
+          "type": "product",
+          "settings": {
+            "product": "the-complete-snowboard",
+            "title": ""
+          }
+        },
+        "product_zniV6G": {
+          "type": "product",
+          "settings": {
+            "product": "the-multi-managed-snowboard",
+            "title": ""
+          }
+        },
+        "product_y3Yg6U": {
+          "type": "product",
+          "settings": {
+            "product": "the-collection-snowboard-oxygen",
+            "title": ""
+          }
+        },
+        "product_NjkVWT": {
+          "type": "product",
+          "settings": {
+            "product": "the-multi-location-snowboard",
+            "title": ""
+          }
+        },
+        "product_eab8jq": {
+          "type": "product",
+          "settings": {
+            "product": "the-archived-snowboard",
+            "title": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_fBFry7",
+        "product_zniV6G",
+        "product_y3Yg6U",
+        "product_NjkVWT",
+        "product_eab8jq"
+      ],
+      "settings": {
+        "number_slider_desktop": 3
       }
     },
     "featured_collection": {
@@ -74,5 +127,9 @@
       }
     }
   },
-  "order": ["image_banner", "featured_collection"]
+  "order": [
+    "image_banner",
+    "carousel_jGLYrL",
+    "featured_collection"
+  ]
 }
